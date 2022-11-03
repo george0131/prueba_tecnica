@@ -1,0 +1,8 @@
+CREATE TABLE client (
+    id BIGSERIAL PRIMARY KEY,
+    shared_key TEXT NOT NULL,
+    business_id TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone BIGINT NOT NULL,
+    data_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
