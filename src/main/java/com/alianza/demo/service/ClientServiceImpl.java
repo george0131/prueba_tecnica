@@ -92,6 +92,14 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public ClientDTO findById(Long id) {
+
+        Client found = repository.findById(id).orElse(null);
+
+        return mapper.toDTO(found);
+    }
+
+    @Override
     public ByteArrayInputStream downloadClients() {
 
         List<Client> tutorials = repository.findAll();

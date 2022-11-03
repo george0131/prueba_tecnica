@@ -10,13 +10,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/clients")
 public class ClientRestController {
 
     final ClientService service;
@@ -26,7 +23,7 @@ public class ClientRestController {
         this.service = service;
     }
 
-    @PostMapping("/client")
+    @PostMapping
     public ResponseEntity<ClientDTO> upsertClient(ClientDTO dto) {
 
         ClientDTO created = service.upsertClient(dto);
@@ -34,7 +31,7 @@ public class ClientRestController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    @GetMapping("/clients")
+    @GetMapping
     public ResponseEntity<Page<ClientDTO>> getClients(ClientQuery clientQuery) {
 
         Page<ClientDTO> all = service.getAll(clientQuery);
@@ -42,7 +39,15 @@ public class ClientRestController {
         return ResponseEntity.ok(all);
     }
 
-    @GetMapping("/download-clients")
+    @GetMapping("/{id}")
+    public ResponseEntity<ClientDTO> getClients(@PathVariable Long id) {
+
+        ClientDTO found = service.findById(id);
+
+        return ResponseEntity.ok(found);
+    }
+
+    @GetMapping("/download")
     public ResponseEntity<Resource> downloadClients() {
         String filename = "clients.xlsx";
         InputStreamResource file = new InputStreamResource(service.downloadClients());

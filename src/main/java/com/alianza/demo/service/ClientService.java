@@ -12,5 +12,6 @@ public interface ClientService {
     Page<ClientDTO> getAll(ClientQuery query);
     List<ClientDTO> findAll();
     ClientDTO upsertClient(ClientDTO dto);
+    ClientDTO findById(Long id);
     ByteArrayInputStream downloadClients();
 }
